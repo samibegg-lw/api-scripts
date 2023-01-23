@@ -1,20 +1,20 @@
 # Below is a script to parse JSON into CSV to list vuln data
 # the JSON is fetched using the following 3 API calls:
-# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "Critical" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> transforce-criticals.json
-# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "High" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> transforce-highs.json
-# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "Medium" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> transforce-mediums.json
+# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "Critical" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> vuln-criticals.json
+# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "High" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> vuln-highs.json
+# lacework api post /api/v2/Vulnerabilities/Hosts/search -d '{ "timeFilter": { "startTime": "2023-01-13T20:30:00Z", "endTime": "2023-01-15T22:30:00Z"}, "filters": [ { "field": "severity", "expression": "eq", "value": "Medium" } ], "returns": [ "mid", "severity", "status", "vulnId", "evalCtx", "fixInfo", "featureKey", "machineTags", "cveProps" ] }' >> vuln-mediums.json
 
 
 
 import json
 import csv
 
-with open('transforce-criticals.json') as json_file:
+with open('vuln-criticals.json') as json_file:
     data = json.load(json_file)
  
 dataData = data.get('data')
 
-vuln_scan_csv = open('transforce-criticals.csv', 'w')
+vuln_scan_csv = open('vuln-criticals.csv', 'w')
 csv_writer = csv.writer(vuln_scan_csv)
 fields = ['CVE ID', 'Severity', 'Status', 'Instance ID', 'Hostname', 'CVE Description', 'AWS Account']
 csv_writer.writerow(fields)
